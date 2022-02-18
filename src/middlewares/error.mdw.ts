@@ -15,5 +15,6 @@ export const errorConverter: ErrorRequestHandler = (err, req, res, next) => {
 };
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  console.log(err);
   res.status(err.statusCode).json({ success: false, message: err.message });
 };

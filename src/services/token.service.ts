@@ -19,10 +19,6 @@ const generateAuthToken = ({
   );
 };
 
-module.exports = {
-  generateAuthToken,
-};
-
 const tokenService = { generateAuthToken };
 
 export default tokenService;

@@ -12,7 +12,7 @@ interface IUserCres {
 }
 
 const createUser = async ({ username, password }: IUserCres) => {
-  if (User.isUsernameTaken(username)) {
+  if (await User.isUsernameTaken(username)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Username đã có người sử dụng');
   }
 
@@ -33,7 +33,7 @@ const tryLoginUser = async ({ username, password }: IUserCres) => {
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Sai username hoặc mật khẩu!');
   }
-  
+
   return user;
 };
 

@@ -9,10 +9,12 @@ interface IUser {
   password: string;
   todos: Array<string | Todo>;
   isPasswordMatch: (password: string) => Promise<boolean>;
+  save: () => any;
 }
 interface UserModel extends Model<IUser> {
   isUsernameTaken(username: string): Promise<boolean>;
   getUserByUsername(username: string): Promise<IUser | null | undefined>;
+  getUserById(id: string): Promise<IUser | null | undefined>;
 }
 
 const userSchema = new Schema<IUser, UserModel>({
@@ -34,6 +36,11 @@ userSchema.static(
     return user;
   }
 );
+
+userSchema.static('getUserById', async function getUserById(id) {
+  const user = await this.findById(id);
+  return user;
+});
 
 //* Document Methods
 userSchema.methods.isPasswordMatch = async function (password) {

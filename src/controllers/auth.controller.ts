@@ -14,7 +14,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
   return res.status(httpStatus.OK).json({ success: true });
 });
 
-//*Login User
+//* Login User
 const login = catchAsync(async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
