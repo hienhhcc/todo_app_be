@@ -4,10 +4,16 @@ import { Request, Response } from 'express';
 import catchAsync from '../utils/catchAsync';
 
 import { todoService } from '../services';
+import ApiError from '../utils/ApiError';
 
 //* Fetch all todo
 const getAllTodo = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.userId;
+  const id = req.user._id;
+
+  if (id.toString() !== userId.toString()) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized');
+  }
 
   const todos = await todoService.getAllTodosOfUser({ userId });
 
@@ -18,6 +24,11 @@ const getAllTodo = catchAsync(async (req: Request, res: Response) => {
 const addTodo = catchAsync(async (req: Request, res: Response) => {
   const { todoName } = req.body;
   const userId = req.params.userId;
+  const id = req.user._id;
+
+  if (id.toString() !== userId.toString()) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized');
+  }
 
   const todo = await todoService.addNewTodo({ todoName, userId });
 
@@ -28,6 +39,11 @@ const addTodo = catchAsync(async (req: Request, res: Response) => {
 const editTodo = catchAsync(async (req: Request, res: Response) => {
   const { isChecked } = req.body;
   const { userId, todoId } = req.params;
+  const id = req.user._id;
+
+  if (id.toString() !== userId.toString()) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized');
+  }
 
   const todo = await todoService.patchTodo({ todoId, userId, isChecked });
 
@@ -37,6 +53,11 @@ const editTodo = catchAsync(async (req: Request, res: Response) => {
 //* Remove Todo
 const removeTodo = catchAsync(async (req: Request, res: Response) => {
   const { userId, todoId } = req.params;
+  const id = req.user._id;
+
+  if (id.toString() !== userId.toString()) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized');
+  }
 
   const todo = await todoService.removeTodo({ todoId, userId });
 

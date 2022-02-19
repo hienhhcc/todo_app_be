@@ -5,7 +5,7 @@ import ApiError from '../utils/ApiError';
 
 const verifyCallback =
   (req: any, resolve: any, reject: any) =>
-  async (err: any, user: any, info: any) => {
+  async (err: any, user: { _id: string }, info: any) => {
     if (err || info || !user) {
       return reject(
         new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate')

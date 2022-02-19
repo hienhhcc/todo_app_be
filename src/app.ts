@@ -15,6 +15,13 @@ import {
 } from './configs/config';
 import ApiError from './utils/ApiError';
 import requireRoutes from './middlewares/routes.mdw';
+declare global {
+  namespace Express {
+    interface User {
+      _id: string;
+    }
+  }
+}
 
 const app = express();
 
