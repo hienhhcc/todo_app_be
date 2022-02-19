@@ -19,29 +19,28 @@ const addTodo = catchAsync(async (req: Request, res: Response) => {
   const { todoName } = req.body;
   const userId = req.params.userId;
 
-  console.log(todoName, userId);
-
   const todo = await todoService.addNewTodo({ todoName, userId });
 
   return res.status(httpStatus.OK).json({ success: true, todo });
 });
 
-//* Edit Todo
+//* Check and uncheck complete Todo
 const editTodo = catchAsync(async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { isChecked } = req.body;
+  const { userId, todoId } = req.params;
 
-  await userService.createUser({ username, password });
+  const todo = await todoService.patchTodo({ todoId, userId, isChecked });
 
-  return res.status(httpStatus.OK).json({ success: true });
+  return res.status(httpStatus.OK).json({ success: true, todo });
 });
 
 //* Remove Todo
 const removeTodo = catchAsync(async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { userId, todoId } = req.params;
 
-  await userService.createUser({ username, password });
+  const todo = await todoService.removeTodo({ todoId, userId });
 
-  return res.status(httpStatus.OK).json({ success: true });
+  return res.status(httpStatus.OK).json({ success: true, todo });
 });
 
 export default { addTodo, editTodo, removeTodo, getAllTodo };

@@ -8,8 +8,8 @@ router.get('/:userId/todos', userController.getAllTodo);
 
 router.post('/:userId/todos', userController.addTodo);
 
-router.patch('/:userId/todos', userController.editTodo);
+router.patch('/:userId/todos/:todoId', userController.editTodo);
 
-router.delete('/:userId/todos', userController.removeTodo);
+router.delete('/:userId/todos/:todoId', userController.removeTodo);
 
 export default router;
