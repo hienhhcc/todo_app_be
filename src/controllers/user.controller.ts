@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import catchAsync from '../utils/catchAsync';
 
-import { userService, todoService } from '../services';
+import { todoService } from '../services';
 
 //* Fetch all todo
 const getAllTodo = catchAsync(async (req: Request, res: Response) => {

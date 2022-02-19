@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import passport from 'passport';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import httpStatus from 'http-status';
@@ -20,11 +21,13 @@ const app = express();
 app.disable('etag');
 
 //body parser
-app.use(bodyParser.json());
+app.use(express.json());
 
 // enable cors
 app.use(cors());
 app.options('*', cors());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(morgan('dev'));
 
