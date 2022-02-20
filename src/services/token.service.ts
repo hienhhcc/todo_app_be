@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+import { JWT_EXPIRATION_MINUTES, JWT_SECRET } from '../configs/config';
+
 const generateAuthToken = ({
   _id,
   username,
@@ -12,9 +14,9 @@ const generateAuthToken = ({
       username,
       _id: _id.toString(),
     },
-    'hienhhccsecret',
+    JWT_SECRET,
     {
-      expiresIn: '5h',
+      expiresIn: JWT_EXPIRATION_MINUTES,
     }
   );
 };
