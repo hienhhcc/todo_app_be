@@ -1,37 +1,28 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.port = exports.env = void 0;
-const dotenv = require('dotenv');
-const path = require('path');
-const Joi = require('joi');
-dotenv.config({ path: path.join(__dirname, '../../.env') });
-const envVarsSchema = Joi.object()
+exports.JWT_EXPIRATION_MINUTES = exports.JWT_SECRET = exports.MONGO_DEFAULT_DATABASE = exports.MONGO_PASSWORD = exports.MONGO_USER = exports.port = exports.env = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+const path_1 = __importDefault(require("path"));
+const joi_1 = __importDefault(require("joi"));
+dotenv_1.default.config({ path: path_1.default.join(__dirname, '../../.env') });
+const envVarsSchema = joi_1.default.object()
     .keys({
-    NODE_ENV: Joi.string()
+    NODE_ENV: joi_1.default.string()
         .valid('production', 'development', 'test')
         .required(),
-    PORT: Joi.number().default(8000),
-    // MONGODB_URL: Joi.string().required().description('Mongo DB url'),
-    // JWT_SECRET: Joi.string().required().description('JWT secret key'),
-    // JWT_ACCESS_EXPIRATION_MINUTES: Joi.number()
-    //   .default(30)
-    //   .description('minutes after which access tokens expire'),
-    // JWT_REFRESH_EXPIRATION_DAYS: Joi.number()
-    //   .default(30)
-    //   .description('days after which refresh tokens expire'),
-    // JWT_RESET_PASSWORD_EXPIRATION_MINUTES: Joi.number()
-    //   .default(10)
-    //   .description('minutes after which reset password token expires'),
-    // JWT_VERIFY_EMAIL_EXPIRATION_MINUTES: Joi.number()
-    //   .default(10)
-    //   .description('minutes after which verify email token expires'),
-    // SMTP_HOST: Joi.string().description('server that will send the emails'),
-    // SMTP_PORT: Joi.number().description('port to connect to the email server'),
-    // SMTP_USERNAME: Joi.string().description('username for email server'),
-    // SMTP_PASSWORD: Joi.string().description('password for email server'),
-    // EMAIL_FROM: Joi.string().description(
-    //   'the from field in the emails sent by the app'
-    // ),
+    PORT: joi_1.default.number().default(8000),
+    MONGO_USER: joi_1.default.string().required().description('Mongodb user'),
+    MONGO_PASSWORD: joi_1.default.string().required().description('Mongodb password'),
+    MONGO_DEFAULT_DATABASE: joi_1.default.string()
+        .required()
+        .description('Mongodb default database'),
+    JWT_SECRET: joi_1.default.string().required().description('Jwt secret'),
+    JWT_EXPIRATION_MINUTES: joi_1.default.string()
+        .required()
+        .description('Jwt expiration minutes'),
 })
     .unknown();
 const { value: envVars, error } = envVarsSchema
@@ -40,38 +31,5 @@ const { value: envVars, error } = envVarsSchema
 if (error) {
     throw new Error(`Config validation error: ${error.message}`);
 }
-// export const env = envVars.NODE_ENV;
-// export const port = envVars.PORT;
-exports.env = envVars.NODE_ENV, exports.port = envVars.PORT;
-// module.exports = {
-//   env: envVars.NODE_ENV,
-//   port: envVars.PORT,
-//   // mongoose: {
-//   //   url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
-//   //   options: {
-//   //     useCreateIndex: true,
-//   //     useNewUrlParser: true,
-//   //     useUnifiedTopology: true,
-//   //   },
-//   // },
-//   // jwt: {
-//   //   secret: envVars.JWT_SECRET,
-//   //   accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
-//   //   refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
-//   //   resetPasswordExpirationMinutes:
-//   //     envVars.JWT_RESET_PASSWORD_EXPIRATION_MINUTES,
-//   //   verifyEmailExpirationMinutes: envVars.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES,
-//   // },
-//   // email: {
-//   //   smtp: {
-//   //     host: envVars.SMTP_HOST,
-//   //     port: envVars.SMTP_PORT,
-//   //     auth: {
-//   //       user: envVars.SMTP_USERNAME,
-//   //       pass: envVars.SMTP_PASSWORD,
-//   //     },
-//   //   },
-//   //   from: envVars.EMAIL_FROM,
-//   // },
-// };
+exports.env = envVars.NODE_ENV, exports.port = envVars.PORT, exports.MONGO_USER = envVars.MONGO_USER, exports.MONGO_PASSWORD = envVars.MONGO_PASSWORD, exports.MONGO_DEFAULT_DATABASE = envVars.MONGO_DEFAULT_DATABASE, exports.JWT_SECRET = envVars.JWT_SECRET, exports.JWT_EXPIRATION_MINUTES = envVars.JWT_EXPIRATION_MINUTES;
 //# sourceMappingURL=config.js.map

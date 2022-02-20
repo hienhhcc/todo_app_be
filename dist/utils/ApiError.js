@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class ApiError extends Error {
     constructor(statusCode, message) {
         super(message);
@@ -5,5 +7,5 @@ class ApiError extends Error {
         this.message = message;
     }
 }
-module.exports = ApiError;
+exports.default = ApiError;
 //# sourceMappingURL=ApiError.js.map
